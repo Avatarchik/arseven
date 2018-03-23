@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.IO;
@@ -8,16 +9,18 @@ using System;
 
 public class LoadBundle : MonoBehaviour
 {
-    public string url;
+    public string gulatUrl;
+    public string kabbadiUrl;
+    public string video1Url;
+    public string video2Url;
+
     public Text loadingText;
 
     void Start()
     {
-        if (File.Exists(Application.persistentDataPath + "/gulat.unity3d") && File.Exists(Application.persistentDataPath + "/kabbadi.unity3d"))
+        if (File.Exists(Application.persistentDataPath + "/gulat.unity3d") && File.Exists(Application.persistentDataPath + "/kabadi.unity3d") && File.Exists(Application.persistentDataPath + "/video1.mp4") && File.Exists(Application.persistentDataPath + "/video2.mp4"))
         {
-            loadingText.text = "LOADING 100%";
-            StartCoroutine(LoadAr());
-          //  StartCoroutine(LoadObjectGulat());
+            StartCoroutine(LoadAR());
         }
         else
         {
@@ -25,9 +28,16 @@ public class LoadBundle : MonoBehaviour
         }
     }
 
+    IEnumerator LoadAR()
+    {
+        loadingText.text = "LOADING 100%";
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene("SceneAR");
+    }
+
     IEnumerator DownloadAssetGulat()
     {
-        UnityWebRequest www = UnityWebRequest.Get(url);
+        UnityWebRequest www = UnityWebRequest.Get(gulatUrl);
         DownloadHandler handle = www.downloadHandler;
 
         //Send Request and wait
@@ -47,19 +57,21 @@ public class LoadBundle : MonoBehaviour
             //Construct path to save it
             string dataFileName = "gulat";
             string tempPath = Application.persistentDataPath;
+
             tempPath = Path.Combine(tempPath, dataFileName + ".unity3d");
 
             //Save
             save(handle.data, tempPath);
-            loadingText.text = "LOADING 25%";
+            loadingText.text = "Proses Download gulat 25%";
             StartCoroutine(DownloadAssetKabbadi());
         }
     }
 
+
     IEnumerator DownloadAssetKabbadi()
     {
         yield return new WaitForSeconds(3);
-        UnityWebRequest www = UnityWebRequest.Get(url);
+        UnityWebRequest www = UnityWebRequest.Get(kabbadiUrl);
         DownloadHandler handle = www.downloadHandler;
 
         //Send Request and wait
@@ -83,48 +95,78 @@ public class LoadBundle : MonoBehaviour
 
             //Save
             save(handle.data, tempPath);
-            loadingText.text = "LOADING 50%";
+            loadingText.text = "Proses Download kabadi 50%";
+            StartCoroutine(DownloadAssetVideo1());
         }
     }
 
-    IEnumerator LoadAr()
+    IEnumerator DownloadAssetVideo1()
     {
-        yield return new WaitForSeconds(2);
-        StartCoroutine(LoadObjectGulat());
+        UnityWebRequest www = UnityWebRequest.Get(video1Url);
+        DownloadHandler handle = www.downloadHandler;
 
-    }
+        //Send Request and wait
+        yield return www.Send();
 
-    IEnumerator LoadObjectGulat()
-    {
-        
-        string paths = Application.persistentDataPath + "/gulat.unity3d";
-        AssetBundleCreateRequest bundle = AssetBundle.LoadFromFileAsync(paths);
-        yield return bundle;
-
-        AssetBundle myLoadedAssetBundle = bundle.assetBundle;
-        if (myLoadedAssetBundle == null)
+        if (www.isNetworkError)
         {
-            Debug.Log("Failed to load AssetBundle!");
-            yield break;
+
+            UnityEngine.Debug.Log("Error while Downloading Data: " + www.error);
         }
+        else
+        {
+            UnityEngine.Debug.Log("Success");
 
-        AssetBundleRequest request = myLoadedAssetBundle.LoadAssetAsync<GameObject>("gulat");
-        yield return request;
+            //handle.data
 
-        GameObject obj = request.asset as GameObject;
-        obj.transform.position = new Vector3(0, 0, 0);
-        obj.transform.Rotate(0, 0, 0);
-        obj.transform.localScale = new Vector3(1, 1, 1);
+            //Construct path to save it
+            string dataFileName = "video1";
+            string tempPath = Application.persistentDataPath;
+            tempPath = Path.Combine(tempPath, dataFileName + ".mp4");
 
-        Instantiate(obj);
+            //Save
+            save(handle.data, tempPath);
+            loadingText.text = "Proses Download Video1 75%";
+            StartCoroutine(DownloadAssetVideo2());
+        }
+    }
 
-        myLoadedAssetBundle.Unload(false);
+    IEnumerator DownloadAssetVideo2()
+    {
+        UnityWebRequest www = UnityWebRequest.Get(video2Url);
+        DownloadHandler handle = www.downloadHandler;
+
+        //Send Request and wait
+        yield return www.Send();
+
+        if (www.isNetworkError)
+        {
+
+            UnityEngine.Debug.Log("Error while Downloading Data: " + www.error);
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Success");
+
+            //handle.data
+
+            //Construct path to save it
+            string dataFileName = "video2";
+            string tempPath = Application.persistentDataPath;
+            tempPath = Path.Combine(tempPath, dataFileName + ".mp4");
+
+            //Save
+            save(handle.data, tempPath);
+            loadingText.text = "Proses Download video2 100%";
+            yield return new WaitForSeconds(3);
+            SceneManager.LoadScene("SceneAr");
+        }
     }
 
     void save(byte[] data, string path)
     {
         //Create the Directory if it does not exist
-        if (!Directory.Exists(Path.GetDirectoryName(path)))
+        if (!Directory.Exists(Path.GetDirectoryName(path))) 
         {
             Directory.CreateDirectory(Path.GetDirectoryName(path));
         }
@@ -140,11 +182,4 @@ public class LoadBundle : MonoBehaviour
             Debug.LogWarning("Error: " + e.Message);
         }
     }
-
-
-   
-
-   
-
-
 }

@@ -1,11 +1,13 @@
 ﻿<Properties StartupConfiguration="{26C30C8D-5298-82A5-D274-5E59F1041C8E}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/LoadVideo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/MenuController.cs">
     <Files>
-      <File FileName="Assets/CekSDCard.cs" Line="20" Column="22" />
-      <File FileName="Assets/audiorecordHandler.cs" Line="9" Column="4" />
-      <File FileName="Assets/SavWav.cs" Line="25" Column="129" />
-      <File FileName="Assets/LoadBundle.cs" Line="24" Column="50" />
-      <File FileName="Assets/LoadVideo.cs" Line="8" Column="2" />
+      <File FileName="Assets/Script/LoadBundle.cs" Line="92" Column="41" />
+      <File FileName="Assets/Script/CekSDCard.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/audiorecordHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets/Script/LoadContent.cs" Line="11" Column="49" />
+      <File FileName="Assets/Vuforia/Scripts/DefaultTrackableEventHandler.cs" Line="15" Column="82" />
+      <File FileName="Assets/Script/VideoTrackableEventHandler.cs" Line="83" Column="51" />
+      <File FileName="Assets/Script/MenuController.cs" Line="8" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
