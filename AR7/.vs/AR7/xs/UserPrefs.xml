@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{26C30C8D-5298-82A5-D274-5E59F1041C8E}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/LoadVideo.cs">
+    <Files>
+      <File FileName="Assets/CekSDCard.cs" Line="20" Column="22" />
+      <File FileName="Assets/audiorecordHandler.cs" Line="9" Column="4" />
+      <File FileName="Assets/SavWav.cs" Line="25" Column="129" />
+      <File FileName="Assets/LoadBundle.cs" Line="24" Column="50" />
+      <File FileName="Assets/LoadVideo.cs" Line="8" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.AR7 PreferredExecutionTarget="Unity.Editor" />
+</Properties>
